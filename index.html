@@ -1,11 +1,466 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Promptio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+
+  <title>Promptio — AI Prompt Gallery</title>
+  <meta name="description" content="Promptio, internette paylaşılan en iyi AI promptlarını tek yerde toplar. Keşfet, kaydet, paylaş." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo2.png" />
+  <link rel="apple-touch-icon" href="logo2.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Promptio — AI Prompt Gallery" />
+  <meta property="og:description" content="En iyi AI promptlarını tek yerde keşfet, kaydet, paylaş." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="logo2.png" />
+
+  <style>
+    :root{
+      --bg0:#070B12;
+      --bg1:#0B1220;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --accent1:#2DA8FF;
+      --accent2:#FF6A2A;
+      --shadow: 0 20px 70px rgba(0,0,0,.50);
+      --radius: 22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1000px 600px at 18% 12%, rgba(45,168,255,.18), transparent 55%),
+        radial-gradient(900px 700px at 84% 18%, rgba(255,106,42,.16), transparent 55%),
+        radial-gradient(900px 600px at 50% 90%, rgba(45,168,255,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1120px; margin:0 auto; padding:0 22px}
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(7,11,18,.78), rgba(7,11,18,.35));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .navRow{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:190px;
+    }
+    .brandLogo{
+      width:36px; height:36px; border-radius:12px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .brandTitle{font-weight:700; letter-spacing:.2px}
+    .brandSub{display:block; font-size:12px; color:var(--muted2); margin-top:2px}
+
+    .navLinks{
+      display:flex; gap:18px; align-items:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .navLinks a{opacity:.9}
+    .navLinks a:hover{opacity:1}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18)}
+    .btnPrimary{
+      border-color: rgba(45,168,255,.35);
+      background: linear-gradient(135deg, rgba(45,168,255,.22), rgba(255,106,42,.18));
+    }
+    .btnPrimary:hover{border-color: rgba(45,168,255,.55)}
+
+    /* Hero */
+    .hero{padding:64px 0 26px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:26px;
+      align-items:stretch;
+    }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-size:13px;
+      width:fit-content;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(45,168,255,.12);
+    }
+
+    h1{
+      margin:16px 0 12px;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height:1.06;
+      letter-spacing:-.8px;
+    }
+    .lead{
+      margin:0;
+      font-size: clamp(16px, 2vw, 18px);
+      color:var(--muted);
+      line-height:1.65;
+      max-width: 52ch;
+    }
+
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+
+    .miniRow{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:18px;
+      color:var(--muted2);
+      font-size:13px;
+    }
+    .miniRow span{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    /* Showcase card */
+    .glass{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .glass::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(700px 320px at 20% 20%, rgba(45,168,255,.18), transparent 60%),
+        radial-gradient(700px 320px at 80% 30%, rgba(255,106,42,.16), transparent 60%);
+      pointer-events:none;
+      filter: blur(6px);
+      opacity:.9;
+    }
+    .glassInner{position:relative; padding:18px}
+
+    .mockHeader{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      margin-bottom:12px;
+    }
+    .mockHeaderLeft{display:flex; align-items:center; gap:10px}
+    .mockLogo{
+      width:32px; height:32px; border-radius:12px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      padding:6px;
+    }
+    .mockTitle{font-weight:700; font-size:14px}
+    .mockSub{font-size:12px; color:var(--muted2); margin-top:2px}
+    .mockChip{
+      font-size:12px;
+      color:rgba(255,255,255,.80);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      padding:8px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .pCard{
+      padding:14px 14px;
+      border-radius:18px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .pTop{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.78);
+    }
+    .lines{margin-top:10px; display:grid; gap:8px}
+    .line{
+      height:10px; border-radius:999px;
+      background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+    }
+    .line.s{width:72%}
+    .line.m{width:86%}
+    .line.l{width:96%}
+
+    /* Sections */
+    .section{padding:22px 0 0}
+    .grid3{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .feature{
+      padding:18px;
+      border-radius:20px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .feature h3{margin:8px 0 8px; font-size:16px}
+    .feature p{margin:0; color:var(--muted); font-size:14px; line-height:1.6}
+    .ico{
+      width:40px; height:40px; border-radius:16px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(45,168,255,.16), rgba(255,106,42,.12));
+      box-shadow: 0 16px 50px rgba(0,0,0,.35);
+      font-weight:800;
+    }
+
+    .footer{
+      padding:34px 0 30px;
+      margin-top:40px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted2);
+      font-size:13px;
+    }
+    .footerRow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; flex-wrap:wrap;
+    }
+    .footLinks{display:flex; gap:14px; flex-wrap:wrap}
+    .footLinks a{opacity:.85}
+    .footLinks a:hover{opacity:1}
+
+    /* Mobile */
+    @media (max-width: 920px){
+      .heroGrid{grid-template-columns: 1fr; gap:16px}
+      .navLinks{display:none}
+      .grid3{grid-template-columns:1fr; }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Promptio</h1>
-  <p>Official website placeholder.</p>
+  <header class="nav">
+    <div class="wrap">
+      <div class="navRow">
+        <a class="brand" href="#">
+          <img class="brandLogo" src="logo2.png" alt="Promptio logo" />
+          <div>
+            <div class="brandTitle">Promptio</div>
+            <span class="brandSub">AI Prompt Gallery</span>
+          </div>
+        </a>
+
+        <nav class="navLinks" aria-label="Site navigation">
+          <a href="#features">Özellikler</a>
+          <a href="#how">Nasıl çalışır</a>
+          <a href="#contact">İletişim</a>
+        </nav>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn" href="#contact">Bize yaz</a>
+          <a class="btn btnPrimary" href="#download">Uygulamayı indir</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="heroGrid">
+          <div>
+            <div class="pill"><span class="dot"></span> Prompt keşfetmenin en temiz yolu</div>
+            <h1>AI promptlarını<br/>tek yerde topla, keşfet, paylaş.</h1>
+            <p class="lead">
+              Promptio, internette üretilen ve paylaşılan promptları düzenli bir galeriye dönüştürür.
+              Favorilere ekle, kategorilerle gez, tek tıkla kopyala.
+            </p>
+
+            <div class="ctaRow" id="download">
+              <a class="btn btnPrimary" href="#" aria-label="Download Promptio">App Store / Google Play</a>
+              <a class="btn" href="#features">Özelliklere bak</a>
+            </div>
+
+            <div class="miniRow">
+              <span>⚡ Hızlı keşfet</span>
+              <span>🔒 Premium içerikler</span>
+              <span>📌 Kaydet & paylaş</span>
+            </div>
+          </div>
+
+          <div class="glass" aria-label="App preview">
+            <div class="glassInner">
+              <div class="mockHeader">
+                <div class="mockHeaderLeft">
+                  <img class="mockLogo" src="logo2.png" alt="" />
+                  <div>
+                    <div class="mockTitle">Keşfet</div>
+                    <div class="mockSub">Seçilmiş promptlar</div>
+                  </div>
+                </div>
+                <div class="mockChip">✨ Trending</div>
+              </div>
+
+              <div class="cards">
+                <div class="pCard">
+                  <div class="pTop">
+                    <strong style="font-size:14px;">Cinematic Portrait</strong>
+                    <span class="tag">Fotoğraf</span>
+                  </div>
+                  <div class="lines">
+                    <div class="line l"></div>
+                    <div class="line m"></div>
+                    <div class="line s"></div>
+                  </div>
+                </div>
+
+                <div class="pCard">
+                  <div class="pTop">
+                    <strong style="font-size:14px;">Product Mockup</strong>
+                    <span class="tag">E-ticaret</span>
+                  </div>
+                  <div class="lines">
+                    <div class="line m"></div>
+                    <div class="line l"></div>
+                    <div class="line s"></div>
+                  </div>
+                </div>
+
+                <div class="pCard">
+                  <div class="pTop">
+                    <strong style="font-size:14px;">Minimal UI Copy</strong>
+                    <span class="tag">Metin</span>
+                  </div>
+                  <div class="lines">
+                    <div class="line s"></div>
+                    <div class="line m"></div>
+                    <div class="line l"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="section" id="features">
+          <div class="grid3">
+            <div class="feature">
+              <div class="ico">1</div>
+              <h3>Keşfet odaklı galeri</h3>
+              <p>Kategoriler, trendler ve kürasyon ile doğru promptu hızlıca bul.</p>
+            </div>
+            <div class="feature">
+              <div class="ico">2</div>
+              <h3>Kaydet & paylaş</h3>
+              <p>Favorilere ekle, koleksiyon yap, tek linkle paylaş.</p>
+            </div>
+            <div class="feature">
+              <div class="ico">3</div>
+              <h3>Temiz ve hızlı deneyim</h3>
+              <p>Minimal tasarım, hızlı açılan kartlar, mobil öncelikli yapı.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="how" style="margin-top:8px;">
+          <div class="glass">
+            <div class="glassInner">
+              <h2 style="margin:0 0 10px; font-size:20px; letter-spacing:-.2px;">Nasıl çalışır?</h2>
+              <div style="display:grid; gap:10px; color:var(--muted); line-height:1.65; font-size:14px;">
+                <div>• Topluluk promptları tek yerde toplanır.</div>
+                <div>• Kartlar üzerinden hızlıca incelenir, kopyalanır ve kaydedilir.</div>
+                <div>• Premium içeriklerle daha fazla şablon ve özellik açılır.</div>
+              </div>
+
+              <div class="ctaRow" style="margin-top:14px;">
+                <a class="btn btnPrimary" href="#contact">Beta için iletişim</a>
+                <a class="btn" href="https://furkansolak0.github.io/promptioapp/" rel="noopener">Geçici GitHub Pages linki</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="contact" style="margin-top:10px;">
+          <div class="grid3">
+            <div class="feature" style="grid-column: 1 / -1;">
+              <h3 style="margin:0 0 8px;">İletişim</h3>
+              <p style="margin:0;">
+                Mail: <a href="mailto:hello@promptioapp.com" style="text-decoration:underline; text-underline-offset:3px;">hello@promptioapp.com</a>
+                <span style="opacity:.6;">(istersen farklı maille değiştiririz)</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footerRow">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img src="logo2.png" alt="" style="width:20px;height:20px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);padding:3px;" />
+          <span>© <span id="y"></span> Promptio</span>
+        </div>
+
+        <div class="footLinks">
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="#features">Özellikler</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
