@@ -95,6 +95,7 @@
       font-size:14px;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
       user-select:none;
+      white-space:nowrap;
     }
     .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18)}
     .btnPrimary{
@@ -102,6 +103,11 @@
       background: linear-gradient(135deg, rgba(45,168,255,.22), rgba(255,106,42,.18));
     }
     .btnPrimary:hover{border-color: rgba(45,168,255,.55)}
+    .btnDisabled{
+      opacity:.6;
+      cursor:not-allowed;
+      pointer-events:none;
+    }
 
     /* Hero */
     .hero{padding:64px 0 26px}
@@ -139,7 +145,7 @@
       font-size: clamp(16px, 2vw, 18px);
       color:var(--muted);
       line-height:1.65;
-      max-width: 52ch;
+      max-width: 56ch;
     }
 
     .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
@@ -166,7 +172,10 @@
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
+      transform: translateY(0);
+      transition: transform .18s ease;
     }
+    .glass:hover{transform: translateY(-2px)}
     .glass::before{
       content:"";
       position:absolute; inset:-2px;
@@ -260,6 +269,21 @@
       font-weight:800;
     }
 
+    .ctaBox{
+      margin-top:18px;
+      padding:18px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(135deg, rgba(45,168,255,.10), rgba(255,106,42,.08));
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .ctaBox h3{margin:0; font-size:16px}
+    .ctaBox p{margin:6px 0 0; color:var(--muted); font-size:14px; line-height:1.55}
+
     .footer{
       padding:34px 0 30px;
       margin-top:40px;
@@ -318,19 +342,20 @@
             <div class="pill"><span class="dot"></span> Prompt keşfetmenin en temiz yolu</div>
             <h1>AI promptlarını<br/>tek yerde topla, keşfet, paylaş.</h1>
             <p class="lead">
-              Promptio, internette üretilen ve paylaşılan promptları düzenli bir galeriye dönüştürür.
-              Favorilere ekle, kategorilerle gez, tek tıkla kopyala.
+              Promptio, seçilmiş AI promptlarını temiz bir galeri deneyimine dönüştürür.
+              Kategorilerle gez, favorilere ekle, tek tıkla kopyala.
             </p>
 
             <div class="ctaRow" id="download">
-              <a class="btn btnPrimary" href="#" aria-label="Download Promptio">App Store / Google Play</a>
+              <a class="btn btnPrimary btnDisabled" href="#" aria-label="Download Promptio">App Store (yakında)</a>
+              <a class="btn btnDisabled" href="#" aria-label="Download Promptio Android">Google Play (yakında)</a>
               <a class="btn" href="#features">Özelliklere bak</a>
             </div>
 
             <div class="miniRow">
               <span>⚡ Hızlı keşfet</span>
-              <span>🔒 Premium içerikler</span>
               <span>📌 Kaydet & paylaş</span>
+              <span>🧩 Kategori & etiket</span>
             </div>
           </div>
 
@@ -351,7 +376,7 @@
                 <div class="pCard">
                   <div class="pTop">
                     <strong style="font-size:14px;">Cinematic Portrait</strong>
-                    <span class="tag">Fotoğraf</span>
+                    <span class="tag">Görsel</span>
                   </div>
                   <div class="lines">
                     <div class="line l"></div>
@@ -393,17 +418,29 @@
             <div class="feature">
               <div class="ico">1</div>
               <h3>Keşfet odaklı galeri</h3>
-              <p>Kategoriler, trendler ve kürasyon ile doğru promptu hızlıca bul.</p>
+              <p>Kategoriler ve kürasyon ile doğru promptu hızlıca bul.</p>
             </div>
             <div class="feature">
               <div class="ico">2</div>
-              <h3>Kaydet & paylaş</h3>
-              <p>Favorilere ekle, koleksiyon yap, tek linkle paylaş.</p>
+              <h3>Tek tıkla kopyala</h3>
+              <p>Prompt kartlarını hızlıca incele, kopyala ve kaydet.</p>
             </div>
             <div class="feature">
               <div class="ico">3</div>
-              <h3>Temiz ve hızlı deneyim</h3>
-              <p>Minimal tasarım, hızlı açılan kartlar, mobil öncelikli yapı.</p>
+              <h3>Hızlı ve temiz</h3>
+              <p>Minimal tasarım, mobil öncelikli yapı, akıcı kullanım.</p>
+            </div>
+          </div>
+
+          <div class="ctaBox">
+            <div>
+              <h3>Beta duyurusu için mail bırak</h3>
+              <p>Erken erişim açıldığında ilk sen haberdar ol.</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn btnPrimary" href="#contact">İletişime geç</a>
+              <a class="btn" href="/privacy.html">Privacy Policy</a>
+              <a class="btn" href="/terms.html">Terms</a>
             </div>
           </div>
         </section>
@@ -413,14 +450,14 @@
             <div class="glassInner">
               <h2 style="margin:0 0 10px; font-size:20px; letter-spacing:-.2px;">Nasıl çalışır?</h2>
               <div style="display:grid; gap:10px; color:var(--muted); line-height:1.65; font-size:14px;">
-                <div>• Topluluk promptları tek yerde toplanır.</div>
+                <div>• Promptlar galeri kartlarına dönüştürülür.</div>
                 <div>• Kartlar üzerinden hızlıca incelenir, kopyalanır ve kaydedilir.</div>
-                <div>• Premium içeriklerle daha fazla şablon ve özellik açılır.</div>
+                <div>• Uygulama büyüdükçe daha fazla kategori ve şablon eklenir.</div>
               </div>
 
               <div class="ctaRow" style="margin-top:14px;">
                 <a class="btn btnPrimary" href="#contact">Beta için iletişim</a>
-                <a class="btn" href="https://furkansolak0.github.io/promptioapp/" rel="noopener">Geçici GitHub Pages linki</a>
+                <a class="btn" href="#download">Mağaza linkleri yakında</a>
               </div>
             </div>
           </div>
