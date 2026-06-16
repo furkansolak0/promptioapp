@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.promptio.app",
+      "sha256_cert_fingerprints": [
+        "CE:CB:EA:0C:C1:81:8C:96:49:5D:48:79:57:4B:EA:B6:40:41:5A:E5:92:FB:C4:4E:61:FA:00:61:1C:91:E0:7C"
+      ]
+    }
+  }
+]

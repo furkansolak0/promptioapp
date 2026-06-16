@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Promptio — Account Deletion</title>
+  <meta name="description" content="Request account deletion for Promptio." />
+  <link rel="icon" type="image/png" href="logo2.png" />
+  <style>
+    :root{
+      --bg:#0b0f14; --card:rgba(255,255,255,.06); --text:#e9eef7; --muted:rgba(233,238,247,.7);
+      --border:rgba(255,255,255,.10); --link:#9ad0ff; --max:860px; --r:18px;
+      --ok:#35d07f; --warn:#ffcc66;
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#f7f8fb;--card:#ffffff;--text:#111827;--muted:#4b5563;--border:#e5e7eb;--link:#2563eb;}
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 30% -10%, rgba(138,180,255,.20), transparent 60%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(167,139,250,.18), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{
+      max-width:var(--max); margin:28px auto 0; padding:0 16px;
+      display:flex; align-items:center; gap:12px;
+    }
+    header img{width:38px; height:38px; border-radius:10px}
+    header .brand{font-weight:800; letter-spacing:.2px}
+    main{max-width:var(--max); margin:14px auto 36px; padding:0 16px;}
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:var(--r);
+      padding:22px; box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+    }
+    h1{margin:0 0 8px; font-size:28px}
+    .meta{color:var(--muted); margin:0 0 18px; line-height:1.5}
+    h2{margin:18px 0 8px; font-size:18px}
+    p,li{line-height:1.65}
+    ul{margin:8px 0 0 18px}
+    .steps{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px 16px;
+      margin:10px 0 0;
+    }
+    .badge{
+      display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px;
+      border:1px solid var(--border); color:var(--muted);
+    }
+    .btn{
+      display:inline-block;
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight:700;
+    }
+    .btn:hover{background: rgba(255,255,255,.12); text-decoration:none}
+    .note{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      color:var(--muted);
+    }
+    footer{
+      max-width:var(--max); margin:0 auto 28px; padding:0 16px; color:var(--muted);
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo2.png" alt="Promptio logo" />
+    <div class="brand">Promptio</div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>Account Deletion Request</h1>
+      <p class="meta">
+        This page explains how to delete your Promptio account and associated data.<br/>
+        Support: <a href="mailto:help@promptioapp.com">help@promptioapp.com</a>
+        <span class="badge" style="margin-left:10px;">Age 13+</span>
+      </p>
+
+      <h2>Delete your account in the app</h2>
+      <div class="steps">
+        <ol>
+          <li>Open <strong>Promptio</strong></li>
+          <li>Go to <strong>Settings</strong></li>
+          <li>Tap <strong>Delete Account</strong></li>
+          <li>Confirm the deletion</li>
+        </ol>
+      </div>
+
+      <h2>If you can’t access the app</h2>
+      <p>
+        Email us from the address linked to your Promptio account:
+      </p>
+      <a class="btn" href="mailto:help@promptioapp.com?subject=Promptio%20Account%20Deletion%20Request&body=Hello%20Promptio%20Support%2C%0A%0AI%20would%20like%20to%20delete%20my%20Promptio%20account.%0A%0AAccount%20email%3A%20%5Benter%20your%20email%5D%0AReason%20(optional)%3A%20%0A%0AThank%20you.">
+        Email account deletion request
+      </a>
+
+      <div class="note">
+        <strong>What gets deleted:</strong>
+        Your account email and any account-associated data (e.g., favorites and unlock status) are deleted or de-identified where feasible.<br/><br/>
+        <strong>What may be retained:</strong>
+        Records required for legal, tax, or compliance purposes (for example, purchase history) may be retained for the minimum period required by law.<br/><br/>
+        <strong>Timeframe:</strong>
+        We typically process requests within a reasonable time.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div>© <span id="y"></span> Promptio</div>
+    <div>
+      <a href="index.html">Home</a> ·
+      <a href="privacy.html">Privacy</a> ·
+      <a href="terms.html">Terms</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
