@@ -5,6 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gemini Filigran Kaldırıcı</title>
 <style>
+  #password-gate {
+    position: fixed;
+    inset: 0;
+    background: #0f0f0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
+    gap: 16px;
+  }
+  #password-gate input {
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 4px;
+    outline: none;
+    width: 220px;
+  }
+  #password-gate input:focus { border-color: #555; }
+  #password-gate p {
+    color: #666;
+    font-size: 13px;
+    font-family: -apple-system, sans-serif;
+  }
+  #password-error {
+    color: #e05;
+    font-size: 13px;
+    font-family: -apple-system, sans-serif;
+    display: none;
+  }
+</style>
+<script>
+  (function() {
+    if (sessionStorage.getItem('auth') === '1') return;
+    document.addEventListener('DOMContentLoaded', function() {
+      var gate = document.getElementById('password-gate');
+      var input = document.getElementById('password-input');
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') checkPassword();
+      });
+    });
+  })();
+  function checkPassword() {
+    var input = document.getElementById('password-input');
+    var error = document.getElementById('password-error');
+    if (input.value === '005393') {
+      sessionStorage.setItem('auth', '1');
+      document.getElementById('password-gate').remove();
+    } else {
+      error.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+</script>
+<style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   body {
@@ -209,6 +270,16 @@
 </style>
 </head>
 <body>
+<div id="password-gate" style="display:none">
+  <p>Şifre girin</p>
+  <input id="password-input" type="password" placeholder="••••••" autofocus />
+  <p id="password-error">Yanlış şifre</p>
+</div>
+<script>
+  if (sessionStorage.getItem('auth') !== '1') {
+    document.getElementById('password-gate').style.display = 'flex';
+  }
+</script>
 
 <h1>Gemini Filigran Kaldırıcı</h1>
 <p class="subtitle">Gemini AI ile üretilen görsellerdeki filigranı matematiksel olarak kaldırır.<br>Görseliniz hiçbir sunucuya gönderilmez.</p>
